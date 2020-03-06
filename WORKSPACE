@@ -258,7 +258,7 @@ maven_jar(
 
 maven_jar(
    name = "javax_annotation_javax_annotation_api",
-   artifact = "javax.annotation:javax.annotation-api:1.2",
+   artifact = "javax.annotation:javax.annotation-api:1.3.2",
 )
 
 maven_jar(
@@ -537,8 +537,8 @@ maven_jar(
 # end Pulsar Client
 
 # Kubernetes java client
-kubernetes_client_version = "1.0.0-beta1"
-squareup_okhttp_version = "2.7.5"
+kubernetes_client_version = "7.0.0"
+squareup_okhttp_version = "3.14.5"
 
 maven_jar(
   name = "kubernetes_java_client",
@@ -557,25 +557,25 @@ maven_jar(
 
 maven_jar(
   name = "squareup_okhttp",
-  artifact = "com.squareup.okhttp:okhttp:" + squareup_okhttp_version
+  artifact = "com.squareup.okhttp3:okhttp:" + squareup_okhttp_version
 )
 maven_jar(
   name = "squareup_okio",
-  artifact = "com.squareup.okio:okio:1.6.0"
+  artifact = "com.squareup.okio:okio:1.17.2"
 )
 maven_jar(
   name = "squareup_okhttp_logging_interceptor",
-  artifact = "com.squareup.okhttp:logging-interceptor:" + squareup_okhttp_version
-)
-
-maven_jar(
-  name = "squareup_okhttp_ws",
-  artifact = "com.squareup.okhttp:okhttp-ws:" + squareup_okhttp_version
+  artifact = "com.squareup.okhttp3:logging-interceptor:" + squareup_okhttp_version
 )
 
 maven_jar(
   name = "google_gson",
-  artifact = "com.google.code.gson:gson:2.6.2"
+  artifact = "com.google.code.gson:gson:2.8.0"
+)
+
+maven_jar(
+  name = "io_gsonfire",
+  artifact = "io.gsonfire:gson-fire:1.8.3"
 )
 
 maven_jar(
@@ -734,6 +734,17 @@ maven_jar(
   name = "org_apache_commons_compress",
   artifact = "org.apache.commons:commons-compress:1.14",
 )
+
+maven_jar(
+  name = "javax_xml_bind_jaxb",
+  artifact = "javax.xml.bind:jaxb-api:2.3.0",
+)
+
+maven_jar(
+  name = "javax_activation_activation",
+  artifact = "javax.activation:activation:1.1.1",
+)
+
 
 # bookkeeper & distributedlog dependencies
 maven_jar(
@@ -919,10 +930,12 @@ http_archive(
 
 http_archive(
     name = "com_github_danmar_cppcheck",
-    urls = ["https://github.com/danmar/cppcheck/archive/1.87.zip"],
-    strip_prefix = "cppcheck-1.87",
     build_file = "@//:third_party/cppcheck/cppcheck.BUILD",
-    sha256 = "b3de7fbdc1a23d7341b55f7f88877e106a76847bd5a07fa721c07310b625318b",
+    patch_args = ["-p2"],
+    patches = ["//third_party/cppcheck:cppcheck-readdir-fix.patch"],
+    sha256 = "cb0e66cbe2d6b655fce430cfaaa74b83ad11c91f221e3926f1ca3211bb7c906b",
+    strip_prefix = "cppcheck-1.90",
+    urls = ["https://github.com/danmar/cppcheck/archive/1.90.zip"],
 )
 
 http_archive(
@@ -937,18 +950,18 @@ http_archive(
 # for helm
 http_archive(
     name = "helm_mac",
-    urls = ["https://storage.googleapis.com/kubernetes-helm/helm-v2.7.2-darwin-amd64.tar.gz"],
+    urls = ["https://get.helm.sh/helm-v3.0.2-darwin-amd64.tar.gz"],
     strip_prefix = "darwin-amd64",
     build_file = "@//:third_party/helm/helm.BUILD",
-    sha256 = "5058142bcd6e16b7e01695a8f258d27ae0b6469caf227ddf6aa2181405e6aa8e",
+    sha256 = "05c7748da0ea8d5f85576491cd3c615f94063f20986fd82a0f5658ddc286cdb1",
 )
 
 http_archive(
     name = "helm_linux",
-    urls = ["https://storage.googleapis.com/kubernetes-helm/helm-v2.7.2-linux-amd64.tar.gz"],
+    urls = ["https://get.helm.sh/helm-v3.0.2-linux-amd64.tar.gz"],
     strip_prefix = "linux-amd64",
     build_file = "@//:third_party/helm/helm.BUILD",
-    sha256 = "9f04c4824fc751d6c932ae5b93f7336eae06e78315352aa80241066aa1d66c49",
+    sha256 = "c6b7aa7e4ffc66e8abb4be328f71d48c643cb8f398d95c74d075cfb348710e1d",
 )
 # end helm
 
@@ -998,14 +1011,13 @@ http_archive(
 )
 
 # scala integration
-rules_scala_version = "300b4369a0a56d9e590d9fea8a73c3913d758e12"  # May 27 - update this as needed
+rules_scala_version = "358ab829626c6c2d34ec27f856485d3121e299c7"  # Jan 15 2020 - update this as needed
 
 http_archive(
     name = "io_bazel_rules_scala",
-    urls = ["https://github.com/bazelbuild/rules_scala/archive/%s.zip" % rules_scala_version],
-    type = "zip",
     strip_prefix = "rules_scala-%s" % rules_scala_version,
-    sha256 = "7f35ee7d96b22f6139b81da3a8ba5fb816e1803ed097f7295b85b7a56e4401c7",
+    type = "zip",
+    url = "https://github.com/bazelbuild/rules_scala/archive/%s.zip" % rules_scala_version,
 )
 
 load("@io_bazel_rules_scala//scala:scala.bzl", "scala_repositories")

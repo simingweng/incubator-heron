@@ -27,7 +27,7 @@ Heron build system. For step-by-step build instructions for a specific platform,
 the following guides are available:
 
 * [Building on Linux Platforms](compiling-linux)
-* [Building on Mac OS X](compiling-mac)
+* [Building on Mac OS X](compiling-osx)
 
 Heron can be built either [in its entirety](#building-all-components), as [individual components](#building-specific-components).
 
@@ -40,10 +40,10 @@ You must have the following installed to compile Heron:
 * [Bazel](http://bazel.io/docs/install.html) = {{% bazelVersion %}}. Later
   versions might work but have not been tested. See [Installing Bazel]({{< ref
   "#installing-bazel" >}}) below.
-* [Java 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+* [Java 11](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html)
   is required by Bazel and Heron;
   [topologies](../../../concepts/topologies) can be written in Java 7 or above
-  , but Heron jars are required to run with a Java 8 JRE.
+  , but Heron jars are required to run with a Java 11 JRE.
 * [Autoconf](http://www.gnu.org/software/autoconf/autoconf.html) >=
   2.6.3
 * [Automake](https://www.gnu.org/software/automake/) >= 1.11.1
